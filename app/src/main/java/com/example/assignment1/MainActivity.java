@@ -1,6 +1,7 @@
 package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,16 +27,17 @@ import static com.example.assignment1.Pagination.PAGE_START;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    ProgressBar pb;
     MovieList movieLists = new MovieList();
    // LinearLayoutManager manager;
     GridLayoutManager manager;
+    ProgressBar pb;
     MovieAdapter movieAdapter;
     Service service;
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
     private final int totalPage = 10;
     private boolean isLoading = false;
+    //https://www.youtube.com/watch?v=pM1fAmUQn8g
 
 
     @Override
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerview);
-        pb = findViewById(R.id.progressbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        pb= findViewById(R.id.pb);
         //manager = new LinearLayoutManager(this);
         manager= new GridLayoutManager(this,2);
         LoadingPage();

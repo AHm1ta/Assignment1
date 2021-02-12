@@ -1,6 +1,7 @@
 package com.example.assignment1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -70,6 +73,29 @@ public class MainActivity extends AppCompatActivity {
                 return isLoading;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list, menu);
+        MenuItem menuItem= menu.findItem(R.id.search_icon);
+        SearchView searchView= (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Here!");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                movieAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void LoadingPage() {

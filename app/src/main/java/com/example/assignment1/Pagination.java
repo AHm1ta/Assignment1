@@ -1,15 +1,17 @@
 package com.example.assignment1;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class Pagination extends RecyclerView.OnScrollListener {
     public static final int PAGE_START = 1;
-    private LinearLayoutManager manager;
+    private GridLayoutManager manager;
     private static final int PAGE_SIZE = 10;
 
-    public Pagination(@NonNull LinearLayoutManager layoutManager) {
+    public Pagination(@NonNull GridLayoutManager layoutManager)
+    {
         this.manager = layoutManager;
     }
 

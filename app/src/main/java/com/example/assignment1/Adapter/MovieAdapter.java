@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +20,9 @@ import com.example.assignment1.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     private ArrayList<PopularMovie> popularMovies;
+    private ArrayList<PopularMovie> searchMovie;
     private Activity activity;
     private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w500";
     private boolean isLoaderVisible = false;
@@ -29,6 +32,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public MovieAdapter(ArrayList<PopularMovie> popularMovies, Activity activity) {
         this.popularMovies = popularMovies;
+        searchMovie = new ArrayList<>(popularMovies);
         this.activity = activity;
     }
 
@@ -100,6 +104,38 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     PopularMovie getItem(int position) {
         return popularMovies.get(position);
     }
+
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
+    private final Filter searchFilter= new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<PopularMovie> filterList= new ArrayList<>();
+            if(constraint== null || constraint.length()==0){
+                filterList.addAll(searchMovie);
+            }else {
+                String filterPattern= constraint.toString().toLowerCase().trim();
+                for (PopularMovie movie : searchMovie){
+                    if (movie.getTitle().toLowerCase().contains(filterPattern)){
+                        filterList.add(movie);
+                    }
+                }
+            }
+            FilterResults results= new FilterResults();
+            results.values= filterList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            popularMovies.clear();
+            popularMovies.addAll((List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

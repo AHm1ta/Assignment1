@@ -32,7 +32,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public MovieAdapter(ArrayList<PopularMovie> popularMovies, Activity activity) {
         this.popularMovies = popularMovies;
-        searchMovie = new ArrayList<>(popularMovies);
+        searchMovie = new ArrayList<>();
         this.activity = activity;
     }
 
@@ -82,6 +82,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public void addItems(List<PopularMovie> movies) {
         popularMovies.addAll(movies);
+        searchMovie.addAll(movies);
         notifyDataSetChanged();
     }
 

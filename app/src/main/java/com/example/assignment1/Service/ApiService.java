@@ -9,13 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface Service {
+public interface ApiService {
     //url=http://api.themoviedb.org/3/movie/popular?api_key=3354c6563712f6717437182b5fa0e039
     String BASE_URL="http://api.themoviedb.org/3/";
     String api_key="movie/popular";
     //?api_key=3354c6563712f6717437182b5fa0e039";
 
-    Retrofit retrofit= new Retrofit.Builder()
+    retrofit2.Retrofit retrofit= new retrofit2.Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

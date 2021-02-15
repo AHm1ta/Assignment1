@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 import com.example.assignment1.Adapter.MovieAdapter;
 import com.example.assignment1.Model.MovieList;
 import com.example.assignment1.Model.PopularMovie;
-import com.example.assignment1.Service.Service;
+import com.example.assignment1.Service.ApiService;
 
 import java.util.ArrayList;
 
@@ -28,6 +27,7 @@ import retrofit2.Response;
 
 import static com.example.assignment1.Pagination.PAGE_START;
 
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MovieList movieLists = new MovieList();
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     GridLayoutManager manager;
     ProgressBar pb;
     MovieAdapter movieAdapter;
-    Service service;
+    ApiService service;
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
     private final int totalPage = 10;
@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         pb= findViewById(R.id.pb);
         //manager = new LinearLayoutManager(this);
         manager= new GridLayoutManager(this,2);
+        movieAdapter = new MovieAdapter(new ArrayList<>(), MainActivity.this);
+        recyclerView.setAdapter(movieAdapter);
+        recyclerView.setLayoutManager(manager);
+
         LoadingPage();
 
         recyclerView.addOnScrollListener(new Pagination(manager) {
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void LoadingPage() {
-        service = Service.retrofit.create(Service.class);
+        service = ApiService.retrofit.create(ApiService.class);
         Call<MovieList> call = service.getItems("3354c6563712f6717437182b5fa0e039", currentPage);
         call.enqueue(new Callback<MovieList>() {
             @Override
@@ -107,10 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     MovieList movieList = response.body();
                     ArrayList<PopularMovie> popularMovies1 = new ArrayList<>(movieList.getResults());
-                    movieAdapter = new MovieAdapter(popularMovies1, MainActivity.this);
                     movieAdapter.addItems(popularMovies1);
-                    recyclerView.setAdapter(movieAdapter);
-                    recyclerView.setLayoutManager(manager);
                     pb.setVisibility(View.GONE);
 
 
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadSecondPage() {
-        service = Service.retrofit.create(Service.class);
+        service = ApiService.retrofit.create(ApiService.class);
         Call<MovieList> call = service.getItems("3354c6563712f6717437182b5fa0e039", currentPage);
         call.enqueue(new Callback<MovieList>() {
             @Override
@@ -142,9 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 movieLists = response.body();
                 MovieList movieList = response.body();
                 ArrayList<PopularMovie> popularMovies1 = new ArrayList<>(movieList.getResults());
-                movieAdapter = new MovieAdapter(popularMovies1, MainActivity.this);
-                recyclerView.setAdapter(movieAdapter);
-                recyclerView.setLayoutManager(manager);
                 movieAdapter.addItems(popularMovies1);
 
                 if (currentPage != totalPage) movieAdapter.addLoading();

@@ -1,10 +1,9 @@
-package com.example.assignment1.Service;
+package com.example.assignment1.service;
 
 
-import com.example.assignment1.Model.MovieList;
+import com.example.assignment1.model.MovieList;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

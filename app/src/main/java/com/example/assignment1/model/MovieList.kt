@@ -1,5 +1,6 @@
-package com.example.assignment1.Model
+package com.example.assignment1.model
 
+import com.example.assignment1.model.PopularMovie
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*

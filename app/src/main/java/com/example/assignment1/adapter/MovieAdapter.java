@@ -1,4 +1,4 @@
-package com.example.assignment1.Adapter;
+package com.example.assignment1.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.assignment1.Model.PopularMovie;
+import com.example.assignment1.model.PopularMovie;
 import com.example.assignment1.R;
 
 import java.util.ArrayList;

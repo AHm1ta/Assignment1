@@ -3,6 +3,7 @@ package com.example.assignment1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,10 +15,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.assignment1.Adapter.MovieAdapter;
-import com.example.assignment1.Model.MovieList;
-import com.example.assignment1.Model.PopularMovie;
-import com.example.assignment1.Service.ApiService;
+import com.example.assignment1.adapter.MovieAdapter;
+import com.example.assignment1.model.MovieList;
+import com.example.assignment1.model.PopularMovie;
+import com.example.assignment1.service.ApiService;
+import com.example.assignment1.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ import retrofit2.Response;
 import static com.example.assignment1.Pagination.PAGE_START;
 
 
-public class MainActivity extends AppCompatActivity {
+public class    MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MovieList movieLists = new MovieList();
    // LinearLayoutManager manager;
@@ -40,13 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLastPage = false;
     private final int totalPage = 10;
     private boolean isLoading = false;
-    //https://www.youtube.com/watch?v=pM1fAmUQn8g
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerview);
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter(new ArrayList<>(), MainActivity.this);
         recyclerView.setAdapter(movieAdapter);
         recyclerView.setLayoutManager(manager);
+
 
         LoadingPage();
 
